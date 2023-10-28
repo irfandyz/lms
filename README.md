@@ -1,4 +1,4 @@
-# FOMOTOKO TEST API
+# KORPORA TRAININDO CONSULTANT
 
 ## Installation
 - Clone the repo and `cd` into it
