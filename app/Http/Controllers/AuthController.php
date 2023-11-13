@@ -8,6 +8,11 @@ use Auth;
 
 class AuthController extends Controller
 {
+    public function logout()
+    {
+        Auth::logout();
+        return view('sign-in');
+    }
     public function signIn()
     {
         return view('sign-in');
@@ -16,6 +21,9 @@ class AuthController extends Controller
     {
         $auth = Auth::attempt(['email' => $request->email, 'password' => $request->password]);
         if ($auth) {
+            if (Auth::user()->role == 'administrator') {
+                return redirect('administrator/dashboard');
+            }
             return redirect('user/dashboard');
         }else{
             return redirect()->back()->with('message','Email Atau Password Salah');
@@ -48,5 +56,8 @@ class AuthController extends Controller
         Auth::attempt(['email' => $user->email, 'password' => $user->password]);
 
         return redirect('user/dashboard');
+    }
+    public function userDashboard(){
+        return view('user.dashboard');
     }
 }

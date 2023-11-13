@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\LectureController;
+use App\Http\Controllers\MemberController;
+use App\Http\Controllers\AdministratorController;
 use App\Http\Controllers\TaskController;
 
 Route::controller(AuthController::class)->group(function () {
@@ -10,19 +13,23 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/sign-in', 'login');
     Route::get('/sign-up', 'signUp');
     Route::post('/sign-up', 'store');
+    Route::get('/logout', 'logout');
 });
 
-Route::middleware(['auth'])->group(function () {
-    Route::controller(TaskController::class)->group(function () {
-        Route::get('/user/dashboard', 'index');
-        Route::get('/user/task', 'show');
-        Route::get('/user/task/create', 'create');
-        Route::get('/user/task/update/{id}', 'update');
-        
-        Route::get('/user/task/get', 'get');
-        Route::post('/user/task/edit', 'edit');
-        Route::put('/user/task/delete', 'delete');
-        Route::post('/user/task/store', 'store');
-        Route::put('/user/task/status', 'status');
+Route::middleware('member')->group(function () {
+    Route::controller(MemberController::class)->group(function () {
+        Route::get('user/dashboard', 'dashboard');
+        Route::get('user/lecture', 'index');
+        Route::get('user/lecture/explore', 'explore');
     });
+});
+Route::middleware('administrator')->group(function () {
+    Route::controller(AdministratorController::class)->group(function () {
+        Route::get('administrator/dashboard', 'dashboard');
+        Route::get('administrator/lecture', 'lecture');
+        Route::get('administrator/lecture/create', 'create');
+    });
+});
+Route::controller(LectureController::class)->group(function () {
+    Route::post('lecture/create', 'create');
 });

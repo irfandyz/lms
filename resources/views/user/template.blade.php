@@ -1,158 +1,231 @@
 <!DOCTYPE html>
-<html>
-<?php
-    $listTask = App\Models\Task::where('user_id',Auth::user()->id)->get();
-?>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Laravel</title>
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script>
-    <style>
-        *{
-            font-family: Arial;
-        }
-        body{
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            background: url({{asset('white-texture.jpg')}});
-        }
-        .label-book{
-            font-size: 22px;
-            border-top-right-radius: 20px;
-            border-bottom-right-radius: 20px
-        }
-        .green-primary{
-            background: rgb(38, 82, 41)
-        }
-        .input-form {
-            height: 40px;
-            border: solid 1px rgb(202, 202, 202);
-            width: 100%;
-            padding: 10px;
-            margin-top: 20px;
-        }
-        .area-form {
-            /* height: 100px; */
-            border: solid 1px rgb(202, 202, 202);
-            width: 100%;
-            padding: 10px;
-            margin-top: 20px;
-        }
-        .ck-editor__editable
-        {
-            min-height: 200px !important;
-            max-height: 400px !important;
-        }
-        input[type=checkbox]{
-            transform:scale(2);
-        }
-    </style>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>Atlantis Lite - Bootstrap 4 Admin Dashboard</title>
+	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+	<link rel="icon" href="{{ asset('assets/template') }}/img/icon.ico" type="image/x-icon"/>
+
+	<!-- Fonts and icons -->
+	<script src="{{ asset('assets/template') }}/js/plugin/webfont/webfont.min.js"></script>
+	<script>
+		WebFont.load({
+			google: {"families":["Lato:300,400,700,900"]},
+			custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['{{ asset('assets/template') }}/css/fonts.min.css']},
+			active: function() {
+				sessionStorage.fonts = true;
+			}
+		});
+	</script>
+
+	<!-- CSS Files -->
+	<link rel="stylesheet" href="{{ asset('assets/template') }}/css/bootstrap.min.css">
+	<link rel="stylesheet" href="{{ asset('assets/template') }}/css/atlantis.min.css">
+
+	<!-- CSS Just for demo purpose, don't include it in your project -->
+	<link rel="stylesheet" href="{{ asset('assets/template') }}/css/demo.css">
 </head>
-
 <body>
-    <div class="row">
-        <div class="col-sm-4">
-            <p class="mt-4 green-primary text-white p-2 fw-bold label-book">Hello <span style="color: rgb(225, 228, 50)">{{ Auth::user()->name }}</span></p>
-            <div class="container text-end">
-                <a href="{{ asset('user/task/create') }}" class="btn btn-primary green-primary ">Buat Tugas Baru</a>
-                <div class="list-group mt-3 text-start">
-                    <span class="list-group-item list-group-item green-primary text-white fw-bold" aria-current="true">
-                      Tugas Anda 
-                    </span>
-                    @foreach ($listTask as $item)
-                    <div id="menu{{ $item->id }}" class="d-flex justify-content-between list-group-item list-group-item-action {{($task->id??null)==$item->id?'bg-success':''}}">
-                        <div>
-                            <a href="{{ asset('user/task?task_id='.$item->id) }}" class="text-decoration-none fw-bold {{($task->id??null)==$item->id?'text-white':'text-dark'}}">
-                                <span>{{ $item->name }}</span>
-                            </a>
-                        </div>
-                        <div>
-                            <span>
-                                <i id="check{{ $item->id }}" class="fas {{$item->status == 'Selesai'?'fa-check-circle':''}}"></i>
-                                <i onclick="showModal('{{$item->id}}')" class="fas fa-trash text-danger"></i>
-                            </span>
-                        </div>
-                        </div>
-                    @endforeach
-                  </div>
-            </div>
-        </div>
-        <div class="col-sm-1"></div>
-        <div class="col-sm-6">
-            @yield('content')
-        </div>
-    </div>
+	<div class="wrapper">
+		<div class="main-header">
+			<!-- Logo Header -->
+			<div class="logo-header" data-background-color="blue">
+				
+				<a href="index.html" class="logo">
+					<img src="{{ asset('assets/template') }}/img/logo.svg" alt="navbar brand" class="navbar-brand">
+				</a>
+				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon">
+						<i class="icon-menu"></i>
+					</span>
+				</button>
+				<button class="topbar-toggler more"><i class="icon-options-vertical"></i></button>
+				<div class="nav-toggle">
+					<button class="btn btn-toggle toggle-sidebar">
+						<i class="icon-menu"></i>
+					</button>
+				</div>
+			</div>
+			<!-- End Logo Header -->
 
-    <div class="modal fade" tabindex="-1" id="modalDelete">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Hapus Tugas</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <p>Hapus tugas "<span id="textModal"></span>"</p>
-              <input type="hidden" id="task_id">
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <a href="#" onclick="taskDelete()" id="buttonDelete" class="btn btn-primary">Hapus</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    <script>
-        function showModal(id){
-            $('#modalDelete').modal('show');
-            $.ajax({
-                type: "GET",
-                url: "{{asset('user/task/get?task_id=')}}"+id,
-                data: {
-                    'task_id':id,
-                },
-                success: function(data){
-                    $('#textModal').text(data['name']);
-                    $('#task_id').val(data['id']);
-                },
-            });
-        }
-        
-        function taskDelete(){
-            var task_id = $('#task_id').val();
-            $.ajax({
-                type: "PUT",
-                url: "{{asset('user/task/delete')}}",
-                data: {
-                    'task_id':task_id,
-                    "_method": 'DELETE',
-                    "_token": "{{csrf_token()}}",
-                },
-                success: function(data){
-                    $('#modalDelete').modal('hide');
-                    $('#menu'+data['task_id']).remove();
-                    if ({{$task->id??0}} == data['task_id']) {
-                        location.reload();
-                    }
-                },
-            });
-        }
-    </script>
+			<!-- Navbar Header -->
+			<nav class="navbar navbar-header navbar-expand-lg" data-background-color="blue2">
+				
+				<div class="container-fluid">
+					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
+						<li class="nav-item dropdown hidden-caret">
+							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
+								<div class="avatar-sm">
+									<img src="{{ asset('assets/template') }}/img/profile.jpg" alt="..." class="avatar-img rounded-circle">
+								</div>
+							</a>
+							<ul class="dropdown-menu dropdown-user animated fadeIn">
+								<div class="dropdown-user-scroll scrollbar-outer">
+									<li>
+										<div class="user-box">
+											<div class="avatar-lg"><img src="{{ asset('assets/template') }}/img/profile.jpg" alt="image profile" class="avatar-img rounded"></div>
+											<div class="u-text">
+												<h4>Hizrian</h4>
+												<p class="text-muted">hello@example.com</p><a href="profile.html" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="dropdown-divider"></div>
+										<a class="dropdown-item" href="#">My Profile</a>
+										<a class="dropdown-item" href="#">My Balance</a>
+										<a class="dropdown-item" href="#">Inbox</a>
+										<div class="dropdown-divider"></div>
+										<a class="dropdown-item" href="#">Account Setting</a>
+										<div class="dropdown-divider"></div>
+										<a class="dropdown-item" href="{{ asset('logout') }}">Logout</a>
+									</li>
+								</div>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			<!-- End Navbar -->
+		</div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
-    </script>
+		<!-- Sidebar -->
+		<div class="sidebar sidebar-style-2">			
+			<div class="sidebar-wrapper scrollbar scrollbar-inner">
+				<div class="sidebar-content">
+					<div class="user">
+						<div class="avatar-sm float-left mr-2">
+							<img src="{{ asset('assets/template') }}/img/profile.jpg" alt="..." class="avatar-img rounded-circle">
+						</div>
+						<div class="info">
+							<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+								<span>
+									Hizrian
+									<span class="user-level">Administrator</span>
+									<span class="caret"></span>
+								</span>
+							</a>
+							<div class="clearfix"></div>
+
+							<div class="collapse in" id="collapseExample">
+								<ul class="nav">
+									<li>
+										<a href="#profile">
+											<span class="link-collapse">My Profile</span>
+										</a>
+									</li>
+									<li>
+										<a href="#edit">
+											<span class="link-collapse">Edit Profile</span>
+										</a>
+									</li>
+									<li>
+										<a href="#settings">
+											<span class="link-collapse">Settings</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<ul class="nav nav-primary">
+						<li class="nav-item active">
+							<a href="#dashboard" class="collapsed" >
+								<i class="fas fa-home"></i>
+								<p>Dashboard</p>
+							</a>
+						</li>
+						<li class="nav-section">
+							<span class="sidebar-mini-icon">
+								<i class="fa fa-ellipsis-h"></i>
+							</span>
+							<h4 class="text-section">Components</h4>
+						</li>
+						<li class="nav-item">
+							<a data-toggle="collapse" href="#base">
+								<i class="fas fa-layer-group"></i>
+								<p>Lecture</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="base">
+								<ul class="nav nav-collapse">
+									<li>
+										<a href="{{ asset('user/lecture/explore') }}">
+											<span class="sub-item">Explore Lecture</span>
+										</a>
+									</li>
+									<li>
+										<a href="components/buttons.html">
+											<span class="sub-item">Owned Lecture</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</li>
+						<li class="nav-item">
+							<a data-toggle="collapse" href="#base">
+								<i class="fas fa-layer-group"></i>
+								<p>Mentor</p>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!-- End Sidebar -->
+
+		<div class="main-panel">
+			<div class="content">
+				@yield('content')
+			</div>
+			<footer class="footer">
+				<div class="container-fluid">
+					<div class="copyright ml-auto">
+						2023, made with <i class="fa fa-heart heart text-danger"></i> by <a target="_blank" href="https://www.irfandyaziz.my.id">Irfandy Aziz</a>
+					</div>				
+				</div>
+			</footer>
+		</div>
+		
+	</div>
+	<!--   Core JS Files   -->
+	<script src="{{ asset('assets/template') }}/js/core/jquery.3.2.1.min.js"></script>
+	<script src="{{ asset('assets/template') }}/js/core/popper.min.js"></script>
+	<script src="{{ asset('assets/template') }}/js/core/bootstrap.min.js"></script>
+
+	<!-- jQuery UI -->
+	<script src="{{ asset('assets/template') }}/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+	<script src="{{ asset('assets/template') }}/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+
+	<!-- jQuery Scrollbar -->
+	<script src="{{ asset('assets/template') }}/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+
+
+	<!-- Chart JS -->
+	<script src="{{ asset('assets/template') }}/js/plugin/chart.js/chart.min.js"></script>
+
+	<!-- jQuery Sparkline -->
+	<script src="{{ asset('assets/template') }}/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+
+	<!-- Chart Circle -->
+	<script src="{{ asset('assets/template') }}/js/plugin/chart-circle/circles.min.js"></script>
+
+	<!-- Datatables -->
+	<script src="{{ asset('assets/template') }}/js/plugin/datatables/datatables.min.js"></script>
+
+	<!-- Bootstrap Notify -->
+	<script src="{{ asset('assets/template') }}/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+
+	<!-- jQuery Vector Maps -->
+	<script src="{{ asset('assets/template') }}/js/plugin/jqvmap/jquery.vmap.min.js"></script>
+	<script src="{{ asset('assets/template') }}/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>
+
+	<!-- Sweet Alert -->
+	<script src="{{ asset('assets/template') }}/js/plugin/sweetalert/sweetalert.min.js"></script>
+
+	<!-- Atlantis JS -->
+	<script src="{{ asset('assets/template') }}/js/atlantis.min.js"></script>
+
+	<!-- Atlantis DEMO methods, don't include it in your project! -->
 </body>
-
 </html>
