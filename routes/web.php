@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LectureController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\AdministratorController;
+use App\Http\Controllers\LessonController;
 use App\Http\Controllers\TaskController;
 
 Route::controller(AuthController::class)->group(function () {
@@ -28,8 +29,12 @@ Route::middleware('administrator')->group(function () {
         Route::get('administrator/dashboard', 'dashboard');
         Route::get('administrator/lecture', 'lecture');
         Route::get('administrator/lecture/create', 'create');
+        Route::get('administrator/lecture/lesson', 'lesson');
     });
 });
 Route::controller(LectureController::class)->group(function () {
     Route::post('lecture/create', 'create');
+});
+Route::controller(LessonController::class)->group(function () {
+    Route::post('lesson/create', 'create');
 });
