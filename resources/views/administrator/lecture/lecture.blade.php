@@ -31,7 +31,7 @@
         @foreach ($lesson as $item)
         <div class="accordion-item">
           <h2 class="accordion-header">
-            <button class="btn btn-primary w-100 text-left collapsed" onclick="SetVideo('{{$item->id}}','{{ asset('assets/lesson-video').'/'.$item->file }}')" type="button" data-bs-toggle="collapse"
+            <button class="btn btn-primary w-100 text-left collapsed" type="button" data-bs-toggle="collapse"
               data-bs-target="#flush-collapse{{ $item->id }}" aria-expanded="false"
               aria-controls="flush-collapse{{ $item->id }}">
               <div class="d-flex justify-content-between">
@@ -50,25 +50,7 @@
             <div class="accordion-body">
               <div class="d-flex justify-content-center">
                 {{-- <video id="video{{ $item->id }}" src="#" width="400" controls></video> --}}
-                <video
-                  id="video{{ $item->id }}"
-                  class="video-js"
-                  controls
-                  preload="auto"
-                  width="640"
-                  height="264"
-                  poster="MY_VIDEO_POSTER.jpg"
-                  data-setup="{}"
-                >
-                  <source src="MY_VIDEO.mp4" type="video/mp4" />
-                  <source src="MY_VIDEO.webm" type="video/webm" />
-                  <p class="vjs-no-js">
-                    To view this video please enable JavaScript, and consider upgrading to a
-                    web browser that
-                    <a href="https://videojs.com/html5-video-support/" target="_blank"
-                      >supports HTML5 video</a
-                    >
-                  </p>
+                <video id="video{{ $item->id }}" class="video-js" src="{{ asset('assets/lesson-video').'/'.$item->file }}" controls preload="auto" width="640" height="264" poster="{{ asset('assets/lesson-video/thumbnail.svg')}}" data-setup="{}">
                 </video>
               </div>
               {!! $item->description !!}
@@ -101,10 +83,6 @@
   </div>
 </div>
 <script>
-  function SetVideo(id,path){
-    $("#video"+id).attr('src',path);
-    // $("#video"+id)[0].load();
-  }
   function deleteLecture(){
     swal({
     title: "Are you sure?",
