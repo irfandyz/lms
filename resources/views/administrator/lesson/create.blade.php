@@ -29,6 +29,9 @@
                 @if($errors->has('file'))
                     <small class="text-danger">{{ $errors->first('file') }}</small>
                 @endif
+                @if($errors->any())
+                    <small class="text-danger">please re-upload the video</small>
+                @endif
             </div>
         </div>
         <div class="d-flex justify-content-end mt-2">

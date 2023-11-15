@@ -11,10 +11,10 @@ use Auth;
 class AdministratorController extends Controller
 {
     public function lecture(request $request){
-        $lectures = Lecture::where('user_id',Auth::user()->id)->get();
+        $lectures = Lecture::where('user_id',Auth::user()->id)->paginate(6);
         $lecture = null;
         $lesson = null;
-        if ($request) {
+        if ($request->id) {
             $lecture = Lecture::find($request->id);
             $lesson = Lesson::where('lecture_id',$lecture->id)->get();
         }

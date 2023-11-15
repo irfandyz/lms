@@ -21,6 +21,7 @@
 	<!-- CSS Files -->
 	<link rel="stylesheet" href="{{ asset('assets/template') }}/css/bootstrap.min.css">
 	<link rel="stylesheet" href="{{ asset('assets/template') }}/css/atlantis.min.css">
+	<link href="https://vjs.zencdn.net/8.6.1/video-js.css" rel="stylesheet" />
 </head>
 <body>
 	<div class="wrapper">
@@ -53,17 +54,17 @@
 						<li class="nav-item dropdown hidden-caret">
 							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
 								<div class="avatar-sm">
-									<img src="{{ asset('assets/template') }}/img/profile.jpg" alt="..." class="avatar-img rounded-circle">
+									<img src="{{ asset('assets/user-photo'.'/'.(Auth::user()->photo==null?'default.png':Auth::user()->photo) )}}" alt="..." class="avatar-img rounded-circle">
 								</div>
 							</a>
 							<ul class="dropdown-menu dropdown-user animated fadeIn">
 								<div class="dropdown-user-scroll scrollbar-outer">
 									<li>
 										<div class="user-box">
-											<div class="avatar-lg"><img src="{{ asset('assets/template') }}/img/profile.jpg" alt="image profile" class="avatar-img rounded"></div>
+											<div class="avatar-lg"><img src="{{ asset('assets/user-photo'.'/'.(Auth::user()->photo==null?'default.png':Auth::user()->photo) )}}" alt="image profile" class="avatar-img rounded"></div>
 											<div class="u-text">
-												<h4>Hizrian</h4>
-												<p class="text-muted">hello@example.com</p><a href="profile.html" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
+												<h4>{{ Auth::user()->name }}</h4>
+												<p class="text-muted">{{ Auth::user()->email }}</p><a href="profile.html" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
 											</div>
 										</div>
 									</li>
@@ -71,9 +72,6 @@
 										<div class="dropdown-divider"></div>
 										<a class="dropdown-item" href="#">My Profile</a>
 										<a class="dropdown-item" href="#">My Balance</a>
-										<a class="dropdown-item" href="#">Inbox</a>
-										<div class="dropdown-divider"></div>
-										<a class="dropdown-item" href="#">Account Setting</a>
 										<div class="dropdown-divider"></div>
 										<a class="dropdown-item" href="{{ asset('logout') }}">Logout</a>
 									</li>
@@ -92,13 +90,13 @@
 				<div class="sidebar-content">
 					<div class="user">
 						<div class="avatar-sm float-left mr-2">
-							<img src="{{ asset('assets/template') }}/img/profile.jpg" alt="..." class="avatar-img rounded-circle">
+							<img src="{{ asset('assets/user-photo'.'/'.(Auth::user()->photo==null?'default.png':Auth::user()->photo) )}}" alt="..." class="avatar-img rounded-circle">
 						</div>
 						<div class="info">
 							<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
 								<span>
-									Hizrian
-									<span class="user-level">Administrator</span>
+									{{ Auth::user()->name }}
+									<span class="user-level">{{ Auth::user()->role }}</span>
 									<span class="caret"></span>
 								</span>
 							</a>
@@ -170,6 +168,7 @@
 			</div>
 		</div>
 		<!-- End Sidebar -->
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<div class="main-panel">
@@ -186,6 +185,7 @@
 		</div>
 		
 	</div>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 	<script src="{{ asset('assets/template') }}/js/core/bootstrap.min.js"></script>
 	<script src="{{ asset('assets/template') }}/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
